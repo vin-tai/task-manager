@@ -15,6 +15,8 @@ public class Account {
     @Column(nullable = false)
     private String password;
 
+    private String authority;
+
     protected Account() {}
 
     public Account(String email, String password) {
@@ -39,5 +41,15 @@ public class Account {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAuthority() {return authority;}
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 }
