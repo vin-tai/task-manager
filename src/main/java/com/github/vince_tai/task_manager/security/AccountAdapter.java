@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class AccountAdapter implements UserDetails {
-    private Account account;
+    private final Account account;
     public AccountAdapter(Account account) {
         this.account = account;
     }
