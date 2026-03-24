@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @NullMarked
 public class AccountUserDetailsService implements UserDetailsService {
-    private AccountRepository repository;
+    private final AccountRepository repository;
     public AccountUserDetailsService(AccountRepository repository) {
         this.repository = repository;
     }
