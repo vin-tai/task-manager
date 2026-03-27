@@ -31,6 +31,7 @@ public class AccountService {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
         Account account = mapper.toEntity(request);
+        account.setEmail(email);
         account.setPassword(passwordEncoder.encode(request.password()));
         repository.save(account);
     }

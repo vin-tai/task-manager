@@ -31,8 +31,14 @@ public class TaskService {
         return mapper.toDto(newTask);
     }
 
-    public List<TaskResponse> getTasks() {
-        List<Task> tasks = repository.findAll();
+    public List<TaskResponse> getTasks(String author) {
+        List<Task> tasks = (author != null)
+                ? repository.findByAuthor(author.toLowerCase())
+                : repository.findAll();
+        return processTasks(tasks);
+    }
+
+    private List<TaskResponse> processTasks(List<Task> tasks) {
         return tasks.stream()
                 .map(mapper::toDto)
                 .toList()
