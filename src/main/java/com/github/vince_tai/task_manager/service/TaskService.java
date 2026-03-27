@@ -9,6 +9,9 @@ import com.github.vince_tai.task_manager.mapping.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class TaskService {
     private final TaskRepository repository;
@@ -26,5 +29,13 @@ public class TaskService {
         task.setStatus(TaskStatus.CREATED);
         Task newTask = repository.save(task);
         return mapper.toDto(newTask);
+    }
+
+    public List<TaskResponse> getTasks() {
+        List<Task> tasks = repository.findAll();
+        return tasks.stream()
+                .map(mapper::toDto)
+                .toList()
+                .reversed();
     }
 }
