@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/accounts").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/tasks").hasRole("USER")
+                        .requestMatchers("/api/tasks").hasRole("USER")
                         .anyRequest().denyAll()
                 )
                 .build();
