@@ -2,6 +2,9 @@ package com.github.vince_tai.task_manager.domain.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "accounts")
 public class Account {

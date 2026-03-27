@@ -19,10 +19,12 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Account author;
 
     protected Task() {}
-    public Task(String title, String description, TaskStatus status, String author) {
+    public Task(String title, String description, TaskStatus status, Account author) {
         this.title = title;
         this.description = description;
         this.status = status;
@@ -57,11 +59,11 @@ public class Task {
         this.status = status;
     }
 
-    public String getAuthor() {
+    public Account getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Account author) {
         this.author = author;
     }
 }
