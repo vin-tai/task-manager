@@ -1,6 +1,6 @@
 package com.github.vince_tai.task_manager.service;
 
-import com.github.vince_tai.task_manager.api.dto.AccountRegistrationRequest;
+import com.github.vince_tai.task_manager.api.dto.RegisterAccountRequest;
 import com.github.vince_tai.task_manager.domain.entity.Account;
 import com.github.vince_tai.task_manager.domain.repository.AccountRepository;
 import com.github.vince_tai.task_manager.mapping.AccountMapper;
@@ -25,7 +25,7 @@ public class AccountService {
     }
 
     @Transactional
-    public void register(AccountRegistrationRequest request) {
+    public void register(RegisterAccountRequest request) {
         String email = request.email().toLowerCase();
         if (repository.existsByEmail(email)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);

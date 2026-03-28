@@ -12,5 +12,6 @@ public interface TaskMapper {
     Task toEntity(TaskRequest taskRequest);
 
     @Mapping(source="author.email", target="author")
+    @Mapping(source="assignee.email", target="assignee", defaultValue = "none")
     TaskResponse toDto(Task task);
 }

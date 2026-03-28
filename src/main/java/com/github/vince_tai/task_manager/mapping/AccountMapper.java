@@ -1,6 +1,6 @@
 package com.github.vince_tai.task_manager.mapping;
 
-import com.github.vince_tai.task_manager.api.dto.AccountRegistrationRequest;
+import com.github.vince_tai.task_manager.api.dto.RegisterAccountRequest;
 import com.github.vince_tai.task_manager.domain.entity.Account;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,5 +9,5 @@ import org.mapstruct.Mapping;
 public interface AccountMapper {
 
     @Mapping(target = "authority", constant = "ROLE_USER")
-    Account toEntity(AccountRegistrationRequest request);
+    Account toEntity(RegisterAccountRequest request);
 }

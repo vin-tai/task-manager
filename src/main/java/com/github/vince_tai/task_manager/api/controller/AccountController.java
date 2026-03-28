@@ -1,6 +1,6 @@
 package com.github.vince_tai.task_manager.api.controller;
 
-import com.github.vince_tai.task_manager.api.dto.AccountRegistrationRequest;
+import com.github.vince_tai.task_manager.api.dto.RegisterAccountRequest;
 import com.github.vince_tai.task_manager.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class AccountController {
     AccountService service;
 
     @PostMapping(path = "/api/accounts")
-    public void register(@Valid @RequestBody AccountRegistrationRequest request) {
+    public void register(@Valid @RequestBody RegisterAccountRequest request) {
         service.register(request);
     }
 }
