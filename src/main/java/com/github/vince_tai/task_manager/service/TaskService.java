@@ -11,6 +11,7 @@ import com.github.vince_tai.task_manager.domain.repository.AccountRepository;
 import com.github.vince_tai.task_manager.domain.repository.TaskRepository;
 import com.github.vince_tai.task_manager.mapping.TaskMapper;
 import com.github.vince_tai.task_manager.security.AccountAdapter;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class TaskService {
         this.mapper = mapper;
     }
 
+    @Transactional
     public TaskResponse create(TaskRequest request, String username) {
         Task task = mapper.toEntity(request);
         Account author = accountRepository.findByEmail(username)
@@ -44,6 +46,7 @@ public class TaskService {
         return mapper.toDto(taskRepository.save(task));
     }
 
+    @Transactional
     public TaskResponse assign(AssignTaskRequest request, long taskId, AccountAdapter accountAdapter) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
@@ -59,6 +62,7 @@ public class TaskService {
         return mapper.toDto(taskRepository.save(task));
     }
 
+    @Transactional
     public TaskResponse updateStatus(StatusRequest request, long taskId, AccountAdapter accountAdapter) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
@@ -69,6 +73,7 @@ public class TaskService {
         return mapper.toDto(taskRepository.save(task));
     }
 
+    @Transactional
     public List<TaskResponse> getTasks(String author, String assignee) {
         List<Task> tasks;
 

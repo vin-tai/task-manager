@@ -17,6 +17,7 @@ public class AuthService {
     public AuthService(JwtEncoder jwtEncoder) {
         this.jwtEncoder = jwtEncoder;
     }
+
     public TokenResponse createToken(String username, List<String> authorities) {
         JwtClaimsSet claimsSet = JwtClaimsSet.builder()
                 .subject(username)

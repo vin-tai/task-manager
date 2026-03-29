@@ -28,18 +28,18 @@ public class TaskController {
         return ResponseEntity.ok().body(response);
     }
 
-    @PutMapping(path = "/api/tasks/<taskId>/assign")
+    @PutMapping(path = "/api/tasks/{taskId}/assign")
     public ResponseEntity<TaskResponse> assignTask(
-            @RequestParam long taskId,
+            @PathVariable long taskId,
             @RequestBody @Valid AssignTaskRequest request,
             @AuthenticationPrincipal AccountAdapter accountAdapter
             ) {
         return ResponseEntity.ok().body(service.assign(request, taskId, accountAdapter));
     }
 
-    @PutMapping(path ="/api/tasks/<taskId>/status")
+    @PutMapping(path ="/api/tasks/{taskId}/status")
     public ResponseEntity<TaskResponse> updateStatus(
-            @RequestParam long taskId,
+            @PathVariable long taskId,
             @RequestBody @Valid StatusRequest request,
             @AuthenticationPrincipal AccountAdapter accountAdapter
     ){
