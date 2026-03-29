@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +23,9 @@ public class TaskController {
     @PostMapping(path = "/api/tasks")
     public ResponseEntity<TaskResponse> createTask(
             @RequestBody @Valid TaskRequest request,
-            @AuthenticationPrincipal AccountAdapter accountAdapter
+            @AuthenticationPrincipal Jwt jwt
     ) {
-        TaskResponse response = service.create(request, accountAdapter.getUsername());
+        TaskResponse response = service.create(request, jwt.getSubject());
         return ResponseEntity.ok().body(response);
     }
 
@@ -32,18 +33,18 @@ public class TaskController {
     public ResponseEntity<TaskResponse> assignTask(
             @PathVariable long taskId,
             @RequestBody @Valid AssignTaskRequest request,
-            @AuthenticationPrincipal AccountAdapter accountAdapter
+            @AuthenticationPrincipal Jwt jwt
             ) {
-        return ResponseEntity.ok().body(service.assign(request, taskId, accountAdapter));
+        return ResponseEntity.ok().body(service.assign(request, taskId, jwt.getSubject()));
     }
 
     @PutMapping(path ="/api/tasks/{taskId}/status")
     public ResponseEntity<TaskResponse> updateStatus(
             @PathVariable long taskId,
             @RequestBody @Valid StatusRequest request,
-            @AuthenticationPrincipal AccountAdapter accountAdapter
+            @AuthenticationPrincipal Jwt jwt
     ){
-        return ResponseEntity.ok().body(service.updateStatus(request, taskId, accountAdapter));
+        return ResponseEntity.ok().body(service.updateStatus(request, taskId, jwt.getSubject()));
     }
 
     @GetMapping(path = "/api/tasks")

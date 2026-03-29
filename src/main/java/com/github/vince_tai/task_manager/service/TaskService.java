@@ -14,6 +14,7 @@ import com.github.vince_tai.task_manager.security.AccountAdapter;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -47,26 +48,26 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskResponse assign(AssignTaskRequest request, long taskId, AccountAdapter accountAdapter) {
+    public TaskResponse assign(AssignTaskRequest request, long taskId, String username) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
 
-        if (!task.getAuthor().getEmail().equals(accountAdapter.getUsername())) {
+        if (!task.getAuthor().getEmail().equals(username)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to assign this task");
         }
 
-        String username = request.assignee();
-        Account assignee = accountRepository.findByEmail(username)
+        String assigneeUsername = request.assignee();
+        Account assignee = accountRepository.findByEmail(assigneeUsername)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
         task.setAssignee(assignee);
         return mapper.toDto(taskRepository.save(task));
     }
 
     @Transactional
-    public TaskResponse updateStatus(StatusRequest request, long taskId, AccountAdapter accountAdapter) {
+    public TaskResponse updateStatus(StatusRequest request, long taskId, String username) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
-        if (!task.getAuthor().getEmail().equals(accountAdapter.getUsername())) {
+        if (!task.getAuthor().getEmail().equals(username)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to assign this task");
         }
         task.setStatus(request.status());

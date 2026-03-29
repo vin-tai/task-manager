@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/accounts").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/token").permitAll()
-                        .requestMatchers("/api/tasks**").hasAnyAuthority("SCOPE_ROLE_USER", "ROLE_USER")
+                        .requestMatchers("/api/tasks**").hasAuthority("SCOPE_ROLE_USER")
                         .anyRequest().authenticated()
                 )
                 .build();
