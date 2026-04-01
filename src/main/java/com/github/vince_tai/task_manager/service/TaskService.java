@@ -67,7 +67,7 @@ public class TaskService {
     public TaskResponse updateStatus(StatusRequest request, long taskId, String username) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
-        if (!task.getAuthor().getEmail().equals(username)) {
+        if (!task.getAuthor().getEmail().equals(username) && !task.getAssignee().getEmail().equals(username)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to assign this task");
         }
         task.setStatus(request.status());
